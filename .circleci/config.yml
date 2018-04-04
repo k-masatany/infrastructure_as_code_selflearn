@@ -29,7 +29,7 @@ jobs:
           name: Build images
           command: |
             set -xe
-            packer build template.json
+            packer build ~/circleci-2.0/template.json
 workflows:
   version: 2
   test_and_deploy:
