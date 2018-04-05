@@ -22,7 +22,7 @@ if [ -z "$AWS_DEFAULT_REGION" ]; then
     echo "Need to set AWS_DEFAULT_REGION"
     exit 1
 fi
-login_cmd=`aws ecr get-login --region $AWS_DEFAULT_REGION`
+login_cmd=`aws ecr get-login --no-include-email $AWS_DEFAULT_REGION`
 eval $login_cmd
 
 echo "Start pushing to $ECR_URI"
