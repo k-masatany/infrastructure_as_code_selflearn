@@ -1,24 +1,24 @@
 version: 2
 jobs:
   build:
+    machine: true
     steps:
       - run: echo 0
 
   deploy:
     machine: true
     working_directory: ~/circleci-2.0
-    branch: master
     environment:
       - IMAGE_TAG: $CIRCLE_SHA1
     steps:
       - checkout
-      - run: ~/circleci-2.0/deploy.sh:
+      - run: ~/circleci-2.0/deploy.sh
 
 workflows:
   version: 2
   test_and_deploy:
     jobs:
       - deploy:
-          filters:
-            branches:
-              only: master
+          # filters:
+          #   branches:
+          #     only: master
