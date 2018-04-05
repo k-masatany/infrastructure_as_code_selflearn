@@ -1,26 +1,26 @@
 version: 2
-  jobs:
-    machine:
-      timezone:
-        Asia/Tokyo
-      services:
-        - docker
+jobs:
+  machine:
+    timezone:
+      Asia/Tokyo
+    services:
+      - docker
 
-    dependencies:
-      override:
-        - echo 0
+  dependencies:
+    override:
+      - echo 0
 
-    test:
-      override:
-        - echo 0
+  test:
+    override:
+      - echo 0
 
-    deploy:
-      development:
-        branch: master
-        commands:
-          - ./deploy.sh:
-              environment:
-                IMAGE_TAG: $CIRCLE_SHA1
+  deploy:
+    development:
+      branch: master
+      commands:
+        - ./deploy.sh:
+            environment:
+              IMAGE_TAG: $CIRCLE_SHA1
 
 workflows:
   version: 2
