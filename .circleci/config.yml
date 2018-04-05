@@ -1,43 +1,32 @@
 version: 2
 jobs:
-  build:
-    docker:
-      - image: ruby:2.4.1
-    working_directory: ~/circleci-2.0
-    steps:
-      - checkout
-      - run: ruby -v
-  deploy:
-    machine: true
-    working_directory: ~/circleci-2.0
-    steps:
-      - checkout
+  machine:
+    timezone:
+      Asia/Tokyo
+    services:
+      - docker
 
-      - run: docker --version
-      - run: go version
-      - run:
-          name: Install Packer
-          command: |
-            set -xe
-            sudo apt-get install -y unzip
-            curl -L -o packer.zip https://releases.hashicorp.com/packer/1.0.0/packer_1.0.0_linux_amd64.zip
-            unzip packer.zip
-            rm packer.zip
-            sudo mv packer /usr/local/bin
-            packer version
-      - run:
-          name: Build images
-          command: |
-            set -xe
-            packer build template.json
+  dependencies:
+    override:
+      - echo 0
+
+  test:
+    override:
+      - echo 0
+
+  deploy:
+    development:
+      branch: master
+      commands:
+        - ./deploy.sh:
+            environment:
+              IMAGE_TAG: $CIRCLE_SHA1
+
 workflows:
   version: 2
   test_and_deploy:
     jobs:
-      - build
       - deploy:
-          requires:
-            - build
           filters:
             branches:
               only: master
