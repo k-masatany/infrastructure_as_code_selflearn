@@ -8,11 +8,13 @@ jobs:
   deploy:
     machine: true
     working_directory: ~/circleci-2.0
-    environment:
-      - IMAGE_TAG: $CIRCLE_SHA1
     steps:
       - checkout
-      - run: ~/circleci-2.0/deploy.sh
+      - run: |
+          ver=${CIRCLE_BUILD_NUM}-`date --iso-8601`-${CIRCLE_SHA1}
+          echo "Version name: ${ver}"
+          export IMAGE_TAG=${ver}
+          ~/circleci-2.0/deploy.sh
 
 workflows:
   version: 2
