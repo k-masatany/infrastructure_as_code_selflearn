@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ECR_URI_BASE=764791742448.dkr.ecr.ap-northeast-1.amazonaws.com
 TEMPORARY_IMAGE_NAME=k-masatany/rails-app
@@ -23,6 +23,7 @@ if [ -z "$AWS_DEFAULT_REGION" ]; then
     exit 1
 fi
 login_cmd=`aws ecr get-login --no-include-email $AWS_DEFAULT_REGION`
+echo $login_cmd
 eval $login_cmd
 
 echo "Start pushing to $ECR_URI"
