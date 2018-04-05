@@ -1,32 +1,27 @@
 version: 2
 jobs:
-  machine:
-    timezone:
-      Asia/Tokyo
-    services:
-      - docker
-
-  dependencies:
-    override:
-      - echo 0
-
-  test:
-    override:
-      - echo 0
+  build:
+    machine: true
+    steps:
+      - run: echo 0
 
   deploy:
-    development:
-      branch: master
-      commands:
-        - ./deploy.sh:
-            environment:
-              IMAGE_TAG: $CIRCLE_SHA1
+    machine: true
+    working_directory: ~/circleci-2.0
+    environment:
+      - IMAGE_TAG: $CIRCLE_SHA1
+    steps:
+      - checkout
+      - run: ~/circleci-2.0/deploy.sh
 
 workflows:
   version: 2
   test_and_deploy:
     jobs:
+      - build
       - deploy:
+          requires:
+            - build
           filters:
             branches:
               only: master
