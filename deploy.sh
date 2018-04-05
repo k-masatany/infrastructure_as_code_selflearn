@@ -27,9 +27,10 @@ fi
 login_cmd=`aws ecr get-login --no-include-email --region ${AWS_DEFAULT_REGION}`
 eval $login_cmd
 
-echo "Start pushing to ${ECR_URI}"
+echo "Start pushing to ${ECR_IMAGE_URI}"
 docker tag $TEMPORARY_IMAGE_NAME:latest ${ECR_IMAGE_URI}
 docker push $ECR_IMAGE_URI
+echo "Start pushing to ${ECR_LATEST_URI}"
 docker tag $TEMPORARY_IMAGE_NAME:latest ${ECR_LATEST_URI}
 docker push $ECR_LATEST_URI
 
